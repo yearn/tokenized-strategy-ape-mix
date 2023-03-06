@@ -12,14 +12,14 @@ default_ecosystem: ethereum
 dependencies:
   - name: openzeppelin
     github: OpenZeppelin/openzeppelin-contracts
-    version: 4.7.3
+    version: 4.7.1
   - name: yearnV2
     github: yearn/yearn-vaults
     version: 0.4.6
 
 solidity:
   import_remapping:
-    - "@openzeppelin/contracts=openzeppelin/v4.7.3"
+    - "@openzeppelin/contracts=openzeppelin/v4.7.1"
     - "@yearnV2=yearnV2/v0.4.6"
 
 ethereum:
