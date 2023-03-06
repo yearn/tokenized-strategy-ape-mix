@@ -1,0 +1,34 @@
+name: ape-v2-base-strategy-adapter
+
+plugins:
+  - name: solidity
+  - name: vyper
+  - name: etherscan
+  - name: hardhat
+  - name: alchemy
+  - name: infura
+
+default_ecosystem: ethereum
+dependencies:
+  - name: openzeppelin
+    github: OpenZeppelin/openzeppelin-contracts
+    version: 4.7.3
+  - name: yearnV2
+    github: yearn/yearn-vaults
+    version: 0.4.6
+
+solidity:
+  import_remapping:
+    - "@openzeppelin/contracts=openzeppelin/v4.7.3"
+    - "@yearnV2=yearnV2/v0.4.6"
+
+ethereum:
+  default_network: mainnet-fork
+  mainnet_fork:
+    default_provider: hardhat
+
+hardhat:
+  fork:
+    ethereum:
+      mainnet:
+        upstream_provider: infura
