@@ -5,9 +5,8 @@ pragma solidity ^0.8.15;
 pragma experimental ABIEncoderV2;
 
 // These are the core Yearn libraries
-import {BaseStrategy, StrategyParams} from "@yearnV2/BaseStrategy.sol";
+import {BaseStrategy, StrategyParams, ERC20} from "@yearnV2/BaseStrategy.sol";
 
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 
 abstract contract BaseStrategyAdapter is BaseStrategy {
