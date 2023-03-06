@@ -71,6 +71,7 @@ def weth_amount(user, weth):
     user.transfer(weth, weth_amount)
     yield weth_amount
 
+
 @pytest.fixture
 def vault(gov, rewards, guardian, management, token):
     vault = guardian.deploy(project.dependencies["yearnV2"]["0.4.6"].Vault)

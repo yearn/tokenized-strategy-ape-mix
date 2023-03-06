@@ -65,14 +65,12 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
         return vault.strategies(address(this)).totalDebt;
     }
 
-    function prepareReturn(uint256 _debtOutstanding)
+    function prepareReturn(
+        uint256 _debtOutstanding
+    )
         internal
         override
-        returns (
-            uint256 _profit,
-            uint256 _loss,
-            uint256 _debtPayment
-        )
+        returns (uint256 _profit, uint256 _loss, uint256 _debtPayment)
     {
         // _totalInvested should account for all funds the strategy curently has
         uint256 totalAssets = _totalInvested();
@@ -98,20 +96,20 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
 
     function adjustPosition(uint256 _debtOutstanding) internal override {
         uint256 looseWant = want.balanceOf(address(this));
-        if(vault.strategies(address(this)).lastReport < block.timestamp) {
+        if (vault.strategies(address(this)).lastReport < block.timestamp) {
             // means this is a tend call
-            _tend(looseWant > _debtOutstanding ? looseWant - _debtOutstanding : 0);
+            _tend(
+                looseWant > _debtOutstanding ? looseWant - _debtOutstanding : 0
+            );
         } else {
             // adjust position should always be safe so we set _reported == true
             _invest(looseWant, true);
         }
     }
 
-    function liquidatePosition(uint256 _amountNeeded)
-        internal
-        override
-        returns (uint256 _liquidatedAmount, uint256 _loss)
-    {
+    function liquidatePosition(
+        uint256 _amountNeeded
+    ) internal override returns (uint256 _liquidatedAmount, uint256 _loss) {
         uint256 looseWant = want.balanceOf(address(this));
 
         if (looseWant < _amountNeeded) {
@@ -138,7 +136,9 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
         _freeFunds(vault.strategies(address(this)).totalDebt);
     }
 
-    function tendTrigger(uint256 _callCost) public view override returns (bool) {
+    function tendTrigger(
+        uint256 _callCost
+    ) public view override returns (bool) {
         return tendTrigger();
     }
 
@@ -176,13 +176,9 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
      * @param _amtInWei The amount (in wei/1e-18 ETH) to convert to `want`
      * @return The amount in `want` of `_amtInEth` converted to `want`
      **/
-    function ethToWant(uint256 _amtInWei)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function ethToWant(
+        uint256 _amtInWei
+    ) public view virtual override returns (uint256) {
         // TODO create an accurate price oracle
         return _amtInWei;
     }

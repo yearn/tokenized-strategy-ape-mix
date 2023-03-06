@@ -4,7 +4,16 @@ import pytest
 
 
 def test_operation(
-    chain, accounts, token, vault, strategy, user, strategist, amount, RELATIVE_APPROX, keeper
+    chain,
+    accounts,
+    token,
+    vault,
+    strategy,
+    user,
+    strategist,
+    amount,
+    RELATIVE_APPROX,
+    keeper,
 ):
     # Deposit to the vault
     user_balance_before = token.balanceOf(user)
@@ -28,7 +37,17 @@ def test_operation(
 
 
 def test_emergency_exit(
-    chain, accounts, gov, token, vault, strategy, user, strategist, amount, RELATIVE_APPROX, keeper
+    chain,
+    accounts,
+    gov,
+    token,
+    vault,
+    strategy,
+    user,
+    strategist,
+    amount,
+    RELATIVE_APPROX,
+    keeper,
 ):
     # Deposit to the vault
     token.approve(vault.address, amount, sender=user)
@@ -55,7 +74,7 @@ def test_profitable_harvest(
     amount,
     whale,
     RELATIVE_APPROX,
-    keeper
+    keeper,
 ):
     # Deposit to the vault
     token.approve(vault.address, amount, sender=user)
@@ -83,7 +102,16 @@ def test_profitable_harvest(
 
 
 def test_change_debt(
-    chain, gov, token, vault, strategy, user, strategist, amount, RELATIVE_APPROX, keeper
+    chain,
+    gov,
+    token,
+    vault,
+    strategy,
+    user,
+    strategist,
+    amount,
+    RELATIVE_APPROX,
+    keeper,
 ):
     # Deposit to the vault and harvest
     token.approve(vault.address, amount, sender=user)
@@ -136,7 +164,17 @@ def test_sweep(gov, accounts, vault, strategy, token, user, amount):
 
 
 def test_triggers(
-    chain, gov, vault, strategy, token, amount, user, weth, weth_amount, strategist, keeper
+    chain,
+    gov,
+    vault,
+    strategy,
+    token,
+    amount,
+    user,
+    weth,
+    weth_amount,
+    strategist,
+    keeper,
 ):
     # Deposit to the vault and harvest
     token.approve(vault.address, amount, sender=user)

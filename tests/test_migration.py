@@ -5,6 +5,7 @@
 import pytest
 from ape import project
 
+
 def test_migration(
     chain,
     token,
