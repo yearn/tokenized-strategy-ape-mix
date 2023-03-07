@@ -27,7 +27,7 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
         require(_asset == address(want), "Wrong token");
         asset = _asset;
         _name = _name_;
-        }
+    }
 
     // ******** OVERRIDE THESE METHODS IN THE IMPLEMENTATION CONTRACT ************ \\
 
