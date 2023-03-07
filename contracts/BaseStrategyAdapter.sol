@@ -45,7 +45,7 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
                     OPTIONAL TO OVERRIDE BY STRATEGIST
     //////////////////////////////////////////////////////////////*/
 
-    function _tend(uint256 _totalIdle) internal virtual;
+    function _tend(uint256 _totalIdle) internal virtual {}
 
     function tendTrigger() public view virtual returns (bool) {
         return false;

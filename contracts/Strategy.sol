@@ -87,9 +87,10 @@ contract Strategy is BaseStrategyAdapter {
      * poisition maintence or anything else that doesn't need a full report for.
      *
      * @param _totalIdle The current amount of idle funds that are available to invest.
-     */
+     *
     function _tend(uint256 _totalIdle) internal override {}
-
+    */
+    
     /**
      * @notice Optional trigger to override if tend() will be used by the strategy.
      * 
