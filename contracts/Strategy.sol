@@ -90,7 +90,7 @@ contract Strategy is BaseStrategyAdapter {
      *
     function _tend(uint256 _totalIdle) internal override {}
     */
-    
+
     /**
      * @notice Optional trigger to override if tend() will be used by the strategy.
      * 
