@@ -13,7 +13,7 @@ contract Strategy is BaseStrategyAdapter {
     constructor(
         address _asset,
         address _vault
-    ) BaseStrategyAdapter(_asset, "Strategy Example", "tsSTGY", _vault) {}
+    ) BaseStrategyAdapter(_asset, "Strategy Example", _vault) {}
 
     /**
      * @notice Should invest up to '_amount' of 'asset'.

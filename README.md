@@ -35,3 +35,5 @@ You will only need to override the three functions in Strategy.sol of '_invest',
 ### Set your enviorment Variables
 
     export WEB3_INFURA_PROJECT_ID=yourInfuraApiKey
+
+See the ApeWorx [documentation](https://docs.apeworx.io/ape/stable/) and [github](https://github.com/ApeWorX/ape) for more information.

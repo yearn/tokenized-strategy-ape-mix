@@ -12,7 +12,6 @@ import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 abstract contract BaseStrategyAdapter is BaseStrategy {
     address internal asset;
     string internal _name;
-    string public symbol;
 
     // forward the V3 modifier to the V2 version
     modifier onlyManagement() {
@@ -23,14 +22,12 @@ abstract contract BaseStrategyAdapter is BaseStrategy {
     constructor(
         address _asset,
         string memory _name_,
-        string memory _symbol,
         address _vault
     ) BaseStrategy(_vault) {
         require(_asset == address(want), "Wrong token");
         asset = _asset;
         _name = _name_;
-        symbol = _symbol;
-    }
+        }
 
     // ******** OVERRIDE THESE METHODS IN THE IMPLEMENTATION CONTRACT ************ \\
 
