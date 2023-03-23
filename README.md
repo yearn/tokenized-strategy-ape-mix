@@ -1,8 +1,6 @@
-# V2 Base Strategy Adapter
+# Tokenized Strategy Mix for Yearn V3 strategies
 
-This repo is to allow you to write a strategy for YearnV3 that will work with a Yearn V2 vault.
-
-All adaptations are already implemented in BaseStrategyAdapter.sol.
+This repo will allow you to write, test and deploy V3 "Tokenized Strategies".
 
 You will only need to override the three functions in Strategy.sol of '_invest', 'freeFunds' and '_totalInvested'. With the option to also override '_tend' and 'tendTrigger' if needed.
 
