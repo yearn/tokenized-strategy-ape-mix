@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.15;
+pragma solidity 0.8.18;
 
 import {BaseStrategy} from "@BaseStrategy/BaseStrategy.sol";
-//import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 // Import interfaces for many popular DeFi projects, or add your own!
 //import "../interfaces/<protocol>/<Interface>.sol";
@@ -65,7 +66,7 @@ contract Strategy is BaseStrategy {
         //
         //      _claminAndSellRewards();
         //      _invested = aToken.balanceof(address(this)) + ERC20(asset).balanceOf(address(this));
-        //_invested = ERC20(asset).balanceOf(address(this));
+        _invested = ERC20(asset).balanceOf(address(this));
     }
 
     /*//////////////////////////////////////////////////////////////

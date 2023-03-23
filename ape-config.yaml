@@ -15,13 +15,11 @@ dependencies:
     github: yearn/tokenized-strategy
     branch: master
     contracts_folder: src
-    exclude:
-      - test/**/*
 
 solidity:
   import_remapping:
-    - "@openzeppelin/contracts=openzeppelin/v4.8.3"
-    - "@BaseStrategy=Basestrategy"
+    - "@openzeppelin/contracts=openzeppelin/v4.8.2"
+    - "@BaseStrategy=BaseStrategy/master"
 
 ethereum:
   default_network: mainnet-fork
