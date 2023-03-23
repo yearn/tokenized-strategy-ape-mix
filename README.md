@@ -22,7 +22,7 @@ You will only need to override the three functions in Strategy.sol of '_invest',
 
 ### Install Ape and all dependencies
 
-    pip install -r requirements-dev.txt
+    pip install -r requirements.txt
     
     yarn
     

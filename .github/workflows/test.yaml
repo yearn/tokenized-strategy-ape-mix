@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - uses: ApeWorX/github-action@v1
+      - uses: ApeWorX/github-action@v2
       - run: ape compile --force --size
       - run: npm install hardhat
       - run: ape test

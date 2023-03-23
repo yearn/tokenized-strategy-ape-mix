@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.15;
 
-import {BaseStrategyAdapter, ERC20} from "./BaseStrategyAdapter.sol";
+import {BaseStrategy} from "@BaseStrategy/BaseStrategy.sol";
+//import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 // Import interfaces for many popular DeFi projects, or add your own!
 //import "../interfaces/<protocol>/<Interface>.sol";
 
-// NOTE: Should use the 'asset' variable to get the address of the vaults token rather than 'want'
 // NOTE: To implement permissioned functions you can use the onlyManagement and onlyKeepers modifiers
 
-contract Strategy is BaseStrategyAdapter {
+contract Strategy is BaseStrategy {
     constructor(
-        address _asset,
-        address _vault
-    ) BaseStrategyAdapter(_asset, "Strategy Example", _vault) {}
+        address _asset
+    ) BaseStrategy(_asset, "yStrategy Example") {}
 
     /**
      * @notice Should invest up to '_amount' of 'asset'.
@@ -24,9 +23,8 @@ contract Strategy is BaseStrategyAdapter {
      * through a trusted relay and therefore safe to perform otherwise manipulatable transactions.
      *
      * @param _amount The amount of 'asset' that the strategy should attemppt to deposit in the yield source.
-     * @param _reported Bool repersenting if this is part of a permissined 'report'.
      */
-    function _invest(uint256 _amount, bool _reported) internal override {
+    function _invest(uint256 _amount) internal override {
         // TODO: implement deposit logice EX:
         //
         //      lendingpool.deposit(asset, _amount ,0);
@@ -67,7 +65,7 @@ contract Strategy is BaseStrategyAdapter {
         //
         //      _claminAndSellRewards();
         //      _invested = aToken.balanceof(address(this)) + ERC20(asset).balanceOf(address(this));
-        _invested = ERC20(asset).balanceOf(address(this));
+        //_invested = ERC20(asset).balanceOf(address(this));
     }
 
     /*//////////////////////////////////////////////////////////////
