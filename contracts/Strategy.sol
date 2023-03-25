@@ -8,23 +8,21 @@ import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 // Import interfaces for many popular DeFi projects, or add your own!
 //import "../interfaces/<protocol>/<Interface>.sol";
 
-    /**
-     * The `BaseLibrary` variable can be used to retrieve any storage data 
-     * within the implementation contract as if it were a linked library.
-     *
-     *       i.e. uint256 totalAssets = BaseLibrary.totalAssets()
-     *
-     * We use this so that there does not have to be a library actually linked
-     * to the strategy when deployed that would rarely be used and only for
-     * reading storage. It also standardizies all Base Library interaction.
-     */
+/**
+ * The `BaseLibrary` variable can be used to retrieve any storage data
+ * within the implementation contract as if it were a linked library.
+ *
+ *       i.e. uint256 totalAssets = BaseLibrary.totalAssets()
+ *
+ * We use this so that there does not have to be a library actually linked
+ * to the strategy when deployed that would rarely be used and only for
+ * reading storage. It also standardizies all Base Library interaction.
+ */
 
 // NOTE: To implement permissioned functions you can use the onlyManagement and onlyKeepers modifiers
 
 contract Strategy is BaseStrategy {
-    constructor(
-        address _asset
-    ) BaseStrategy(_asset, "yStrategy Example") {}
+    constructor(address _asset) BaseStrategy(_asset, "yStrategy Example") {}
 
     /*//////////////////////////////////////////////////////////////
                 NEEDED TO BE OVERRIDEN BY STRATEGIST

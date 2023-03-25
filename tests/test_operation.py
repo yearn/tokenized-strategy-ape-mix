@@ -70,7 +70,7 @@ def test_profitable_report(
 
     # TODO: Add some code before harvest #2 to simulate earning yield
     profit = amount // 100
-    asset.transfer(strategy, address, profit, sender=whale)
+    asset.transfer(strategy.address, profit, sender=whale)
 
     # Harvest 2: Realize profit
     chain.mine(1)
@@ -88,7 +88,7 @@ def test_profitable_report(
 
     # needed for profits to unlock
     chain.pending_timestamp = (
-        chain.pending_timestamp + strategy.maxProfitUnlockTime() - 1
+        chain.pending_timestamp + strategy.profitMaxUnlockTime() - 1
     )
     chain.mine(timestamp=chain.pending_timestamp)
 
@@ -126,4 +126,4 @@ def test_triggers(
         total_supply=amount,
     )
 
-    assert strategy.tendTrigger(0) == False
+    assert strategy.tendTrigger() == False

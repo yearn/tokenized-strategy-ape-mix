@@ -83,7 +83,9 @@ def library(daddy):
 def strategy(management, keeper, asset):
     strategy = management.deploy(project.Strategy, asset)
     strategy = project.IStrategy.at(strategy.address)
+
     strategy.setKeeper(keeper, sender=management)
+    strategy.setPerformanceFee(0, sender=management)
 
     yield strategy
 
