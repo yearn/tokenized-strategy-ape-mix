@@ -30,14 +30,15 @@ def keeper(accounts):
 @pytest.fixture(scope="session")
 def tokens():
     tokens = {
-        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+        "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
     }
     yield tokens
 
 
 @pytest.fixture(scope="session")
 def asset(tokens):
-    yield Contract(tokens["weth"])
+    yield Contract(tokens["dai"])
 
 
 @pytest.fixture(scope="session")
@@ -67,6 +68,7 @@ def weth_amount(user, weth):
     user.transfer(weth, weth_amount)
     yield weth_amount
 
+
 # TODO: How to test on chains no library hasn't been deployed to?
 """
 @pytest.fixture(scope="session")
@@ -76,16 +78,18 @@ def library(daddy):
     return lib
 """
 
+
 @pytest.fixture(scope="session")
 def strategy(management, keeper, asset):
     strategy = management.deploy(project.Strategy, asset)
     strategy = project.IStrategy.at(strategy.address)
     strategy.setKeeper(keeper, sender=management)
-    
+
     yield strategy
 
 
 ############ HELPER FUNCTIONS ############
+
 
 @pytest.fixture(scope="session")
 def deposit(strategy, asset, user, amount):

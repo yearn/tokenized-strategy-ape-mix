@@ -5,6 +5,7 @@ plugins:
   - name: etherscan
   - name: hardhat
   - name: infura
+  - name: alchemy
 
 default_ecosystem: ethereum
 dependencies:
@@ -13,13 +14,15 @@ dependencies:
     version: 4.8.2
   - name: BaseStrategy
     github: yearn/tokenized-strategy
-    branch: master
+    branch: deploy
     contracts_folder: src
+    exclude:
+     - src/test/**/*
 
 solidity:
   import_remapping:
     - "@openzeppelin/contracts=openzeppelin/v4.8.2"
-    - "@BaseStrategy=BaseStrategy/master"
+    - "@BaseStrategy=BaseStrategy/deploy"
 
 ethereum:
   default_network: mainnet-fork
