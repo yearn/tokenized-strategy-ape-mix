@@ -32,6 +32,7 @@ def tokens():
     tokens = {
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "dai": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
     }
     yield tokens
 
@@ -80,13 +81,23 @@ def library(daddy):
 
 
 @pytest.fixture(scope="session")
-def strategy(management, keeper, asset):
-    strategy = management.deploy(project.Strategy, asset)
-    strategy = project.IStrategy.at(strategy.address)
+def create_strategy(management, keeper, asset):
+    def create_strategy(asset, performanceFee=0):
+        strategy = management.deploy(project.Strategy, asset)
+        strategy = project.IStrategy.at(strategy.address)
 
-    strategy.setKeeper(keeper, sender=management)
-    strategy.setPerformanceFee(0, sender=management)
+        strategy.setKeeper(keeper, sender=management)
+        strategy.setPerformanceFee(performanceFee, sender=management)
 
+        return strategy
+
+    yield create_strategy
+
+
+@pytest.fixture(scope="session")
+def strategy(asset, create_strategy):
+    strategy = create_strategy(asset)
+    
     yield strategy
 
 
@@ -96,7 +107,7 @@ def strategy(management, keeper, asset):
 @pytest.fixture(scope="session")
 def deposit(strategy, asset, user, amount):
     def deposit(assets=amount, account=user):
-        asset.approve(strategy.address, assets, sender=account)
+        asset.approve(strategy, assets, sender=account)
         strategy.deposit(assets, account, sender=account)
 
     yield deposit

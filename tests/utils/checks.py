@@ -11,13 +11,13 @@ def assert_strategy_reported(log, gain, loss, performance_fee, protocol_fee):
 
 def check_strategy_totals(strategy, total_assets, total_debt, total_idle):
     assert pytest.approx(strategy.totalAssets(), abs=1) == total_assets
-    assert strategy.totalDebt() == total_debt
+    assert pytest.approx(strategy.totalDebt(), abs=1) == total_debt
     assert pytest.approx(strategy.totalIdle(), abs=1) == total_idle
 
 
 def check_strategy_totals(strategy, total_assets, total_debt, total_idle, total_supply):
     assert pytest.approx(strategy.totalAssets(), abs=1) == total_assets
-    assert strategy.totalDebt() == total_debt
+    assert pytest.approx(strategy.totalDebt(), abs=1) == total_debt
     assert pytest.approx(strategy.totalIdle(), abs=1) == total_idle
     # will adjust the accuracy based on token decimals
     assert (

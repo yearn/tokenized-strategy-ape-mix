@@ -27,7 +27,7 @@ def test_operation(
         total_supply=amount,
     )
 
-    chain.mine(1)
+    chain.mine(10)
 
     # withdrawal
     strategy.withdraw(amount, user, user, sender=user)
@@ -73,7 +73,7 @@ def test_profitable_report(
     asset.transfer(strategy.address, profit, sender=whale)
 
     # Harvest 2: Realize profit
-    chain.mine(1)
+    chain.mine(10)
     before_pps = strategy.pricePerShare()
 
     strategy.report(sender=keeper)
