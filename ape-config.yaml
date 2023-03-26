@@ -12,9 +12,9 @@ dependencies:
   - name: openzeppelin
     github: OpenZeppelin/openzeppelin-contracts
     version: 4.8.2
-  - name: BaseStrategy
+  - name: tokenized-strategy
     github: yearn/tokenized-strategy
-    branch: deploy
+    branch: test
     contracts_folder: src
     exclude:
      - src/test/**/*
@@ -22,7 +22,7 @@ dependencies:
 solidity:
   import_remapping:
     - "@openzeppelin/contracts=openzeppelin/v4.8.2"
-    - "@BaseStrategy=BaseStrategy/deploy"
+    - "@tokenized-strategy=tokenized-strategy/test"
 
 ethereum:
   default_network: mainnet-fork

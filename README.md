@@ -8,9 +8,9 @@ You will only need to override the three functions in Strategy.sol of '_invest',
 
 ### Clone the repo
 
-    git clone https://github.com/Schlagonia/V2-Base-Strategy-Adapter
+    git clone https://github.com/Schlagonia/tokenized-strategy-ape-mix
 
-    cd V2-Base-Strategy-Adapter
+    cd tokenized-strategy-ape-mix
 
 ### Set up your virtual enviorment
 
@@ -32,6 +32,8 @@ You will only need to override the three functions in Strategy.sol of '_invest',
     
 ### Set your enviorment Variables
 
-    export WEB3_INFURA_PROJECT_ID=yourInfuraApiKey
+    export WEB3_INFURA_PROJECT_ID=your_infura_api_key
+
+    export ETHERSCAN_API_KEY=your_api_key
 
 See the ApeWorx [documentation](https://docs.apeworx.io/ape/stable/) and [github](https://github.com/ApeWorX/ape) for more information.
