@@ -84,7 +84,7 @@ def library(daddy):
 def create_strategy(management, keeper, asset):
     def create_strategy(asset, performanceFee=0):
         strategy = management.deploy(project.Strategy, asset)
-        strategy = project.IStrategy.at(strategy.address)
+        strategy = project.ITokenizedStrategy.at(strategy.address)
 
         strategy.setKeeper(keeper, sender=management)
         strategy.setPerformanceFee(performanceFee, sender=management)
