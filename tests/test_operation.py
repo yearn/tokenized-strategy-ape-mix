@@ -104,16 +104,10 @@ def test_profitable_report(
 
 def test_triggers(
     chain,
-    daddy,
     strategy,
     asset,
     amount,
     deposit,
-    user,
-    weth,
-    weth_amount,
-    management,
-    keeper,
 ):
     # Deposit to the strategy
     deposit()

@@ -74,7 +74,7 @@ def weth_amount(user, weth):
 """
 @pytest.fixture(scope="session")
 def library(daddy):
-    lib = daddy.deploy(project.dependencies["BaseStrategy"]["master"]['BaseLibrary.sol'])
+    lib = daddy.deploy(project.dependencies["tokenized-strategy"]["test"]['BaseLibrary.sol'])
     print(lib.address)
     return lib
 """
