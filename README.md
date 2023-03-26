@@ -6,6 +6,12 @@ You will only need to override the three functions in Strategy.sol of '_invest',
 
 ## How to start
 
+### Requirements
+    Python >=3.8.0, <=3.10
+    Yarn
+    Node.js >=14
+    Hardhat
+
 ### Clone the repo
 
     git clone https://github.com/Schlagonia/tokenized-strategy-ape-mix
