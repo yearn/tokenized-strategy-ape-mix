@@ -22,7 +22,6 @@ def amount(asset, user, whale):
 
 ############ STANDARD FIXTURES ############
 
-
 @pytest.fixture(scope="session")
 def daddy(accounts):
     yield accounts["0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52"]
