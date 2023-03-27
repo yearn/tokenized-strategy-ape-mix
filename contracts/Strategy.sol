@@ -51,9 +51,6 @@ contract Strategy is BaseStrategy {
      * The amount of 'asset' that is already loose has already
      * been accounted for.
      *
-     * Should do any needed parameter checks, '_amount' may be more
-     * than is actually available.
-     *
      * This function is called {withdraw} and {redeem} calls.
      * Meaning that unless a whitelist is implemented it will be
      * entirely permsionless and thus can be sandwhiched or otherwise
@@ -61,6 +58,11 @@ contract Strategy is BaseStrategy {
      *
      * Should not rely on asset.balanceOf(address(this)) calls other than
      * for diff accounting puroposes.
+     *
+     * Any difference between `_amount` and what is actually freed will be
+     * counted as a loss and passed on to the withdrawer. This means
+     * care should be taken in times of illiquidity. It may be better to revert
+     * if withdraws are simply illiquid so not to realize incorrect losses.
      *
      * @param _amount, The amount of 'asset' to be freed.
      */
@@ -83,6 +85,10 @@ contract Strategy is BaseStrategy {
      * Care should be taken when relying on oracles or swap values rather
      * than actual amounts as all Strategy profit/loss accounting will
      * be done based on this returned value.
+     *
+     * This can still be called post a shutdown, a strategist can check
+     * `BaseLibrary.isShutdown()` to decide if funds should be reinvested
+     * or simply realize any profits/losses.
      *
      * @return _invested A trusted and accurate account for the total
      * amount of 'asset' the strategy currently holds.
