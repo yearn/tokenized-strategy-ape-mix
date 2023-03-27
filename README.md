@@ -12,9 +12,9 @@ You will only need to override the three functions in Strategy.sol of '_invest',
     Node.js >=14
     Hardhat
 
-### Clone the repo
+### Fork this repository
 
-    git clone https://github.com/Schlagonia/tokenized-strategy-ape-mix
+    git clone https://github.com/user/tokenized-strategy-ape-mix
 
     cd tokenized-strategy-ape-mix
 
@@ -22,7 +22,7 @@ You will only need to override the three functions in Strategy.sol of '_invest',
 
     python3 -m venv venv
 
-    source venv/bin/acitvate
+    source venv/bin/activate
 
 ### Install Ape and all dependencies
 
@@ -41,5 +41,9 @@ You will only need to override the three functions in Strategy.sol of '_invest',
     export WEB3_INFURA_PROJECT_ID=your_infura_api_key
 
     export ETHERSCAN_API_KEY=your_api_key
+
+### Strategy Writing
+
+#### Periphery Helpers
 
 See the ApeWorx [documentation](https://docs.apeworx.io/ape/stable/) and [github](https://github.com/ApeWorX/ape) for more information.

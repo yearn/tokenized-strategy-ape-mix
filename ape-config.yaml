@@ -18,11 +18,15 @@ dependencies:
     contracts_folder: src
     exclude:
      - src/test/**/*
+  - name: periphery
+    github: schlagonia/tokenized-strategy-periphery
+    branch: master
 
 solidity:
   import_remapping:
     - "@openzeppelin/contracts=openzeppelin/v4.8.2"
     - "@tokenized-strategy=tokenized-strategy/test"
+    - "@periphery=periphery/master"
 
 ethereum:
   default_network: mainnet-fork
