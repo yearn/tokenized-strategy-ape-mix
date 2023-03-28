@@ -3,10 +3,8 @@ pragma solidity 0.8.18;
 
 import {AprOracleBase} from "@periphery/AprOracleBase.sol";
 
-
 contract StrategyAprOracle is AprOracleBase {
-
-    constructor() AprOracleBase("Strategy Apr Oracle Example"){}
+    constructor() AprOracleBase("Strategy Apr Oracle Example") {}
 
     /**
      * @notice Will return the expected Apr of a strategy post a debt change.
@@ -15,9 +13,10 @@ contract StrategyAprOracle is AprOracleBase {
      *
      * _delta will be == 0 to get the current apr.
      *
-     * This will potentially be called during non-view functions so gas 
+     * This will potentially be called during non-view functions so gas
      * effeciency should be taken into account.
      *
+     * @param _asset The token to get the apr for.
      * @param _delta The difference in debt.
      * @return . The expected apr for the strategy.
      */

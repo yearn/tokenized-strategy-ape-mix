@@ -68,7 +68,7 @@ def test_profitable_report(
         total_supply=amount,
     )
 
-    # TODO: Add some code before harvest #2 to simulate earning yield
+    # TODO: Add some code to simulate earning yield
     profit = amount // 100
     asset.transfer(strategy.address, profit, sender=whale)
 
