@@ -2,6 +2,27 @@ import pytest
 from ape import Contract, project
 
 
+############ CONFIG FIXTURES ############
+
+# Adjust the string based on the `asset` your strategy will use
+# You may need to add the token address to `tokens`.
+@pytest.fixture(scope="session")
+def asset(tokens):
+    yield Contract(tokens["dai"])
+
+
+# Adjust the amount that should be used for testing based on `asset`.
+@pytest.fixture(scope="session")
+def amount(asset, user, whale):
+    amount = 100 * 10 ** asset.decimals()
+
+    asset.transfer(user, amount, sender=whale)
+    yield amount
+
+
+############ STANDARD FIXTURES ############
+
+
 @pytest.fixture(scope="session")
 def daddy(accounts):
     yield accounts["0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52"]
@@ -38,24 +59,11 @@ def tokens():
 
 
 @pytest.fixture(scope="session")
-def asset(tokens):
-    yield Contract(tokens["dai"])
-
-
-@pytest.fixture(scope="session")
 def whale(accounts):
     # In order to get some funds for the token you are about to use,
     # The Balancer vault stays steady ballin on almost all tokens
     # NOTE: If `asset` is a balancer pool this may cause issues on amount checks.
     yield accounts["0xBA12222222228d8Ba445958a75a0704d566BF2C8"]
-
-
-@pytest.fixture(scope="session")
-def amount(asset, user, whale):
-    amount = 100 * 10 ** asset.decimals()
-
-    asset.transfer(user, amount, sender=whale)
-    yield amount
 
 
 @pytest.fixture(scope="session")

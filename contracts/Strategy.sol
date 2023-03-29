@@ -4,6 +4,7 @@ pragma solidity 0.8.18;
 import {BaseStrategy} from "@tokenized-strategy/BaseStrategy.sol";
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 // Import interfaces for many popular DeFi projects, or add your own!
 //import "../interfaces/<protocol>/<Interface>.sol";
@@ -22,6 +23,8 @@ import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 // NOTE: To implement permissioned functions you can use the onlyManagement and onlyKeepers modifiers
 
 contract Strategy is BaseStrategy {
+    using SafeERC20 for ERC20;
+
     constructor(address _asset) BaseStrategy(_asset, "yStrategy Example") {}
 
     /*//////////////////////////////////////////////////////////////
