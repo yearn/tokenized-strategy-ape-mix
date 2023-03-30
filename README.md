@@ -87,6 +87,12 @@ E.X.
 
 Due to the permisionless nature of the tokenized strategies all tests are written without integration with any meta vault funding it. While those tests can be added all V3 vaults utilize the ERC-4626 standard for deposit/withdraws and accounting so they should be able to be plugged in easily to any number of different vaults with the same `asset`.
 
+#### Errors:
+
+"DecodingError: Output corrupted.": Probaably due to not running on a forked chain or a chain where the library isnt deployed.
+"No conversion registered to handle": Check the interface the tests are using is up to date.
+
+
 ### Deployment
 
 #### Contract Verification

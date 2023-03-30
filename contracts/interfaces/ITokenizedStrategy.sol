@@ -3,4 +3,6 @@ pragma solidity 0.8.18;
 
 import "@tokenized-strategy/interfaces/IStrategy.sol";
 
-interface ITokenizedStrategy is IStrategy {}
+interface ITokenizedStrategy is IStrategy {
+    //TODO: Add your specific implementation interface in here.
+}
