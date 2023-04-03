@@ -5,7 +5,7 @@ from ape import Contract, project
 ############ CONFIG FIXTURES ############
 
 # Adjust the string based on the `asset` your strategy will use
-# You may need to add the token address to `tokens`.
+# You may need to add the token address to `tokens` fixture.
 @pytest.fixture(scope="session")
 def asset(tokens):
     yield Contract(tokens["dai"])
@@ -78,23 +78,14 @@ def weth_amount(user, weth):
     yield weth_amount
 
 
-# TODO: How to test on chains no library hasn't been deployed to?
-"""
 @pytest.fixture(scope="session")
-def library(daddy):
-    lib = daddy.deploy(project.dependencies["tokenized-strategy"]["test"]['BaseLibrary.sol'])
-    print(lib.address)
-    return lib
-"""
-
-
-@pytest.fixture(scope="session")
-def create_strategy(management, keeper, asset):
+def create_strategy(management, keeper, rewards):
     def create_strategy(asset, performanceFee=0):
         strategy = management.deploy(project.Strategy, asset)
         strategy = project.ITokenizedStrategy.at(strategy.address)
 
         strategy.setKeeper(keeper, sender=management)
+        strategy.setPerformanceFeeRecipient(rewards, sender=management)
         strategy.setPerformanceFee(performanceFee, sender=management)
 
         return strategy
@@ -109,14 +100,24 @@ def strategy(asset, create_strategy):
     yield strategy
 
 
+@pytest.fixture(scope="session")
+def create_oracle(management):
+    def create_oracle(_management=management):
+        oracle = _management.deploy(project.StrategyAprOracle)
+
+        return oracle
+
+    yield create_oracle
+
+
 ############ HELPER FUNCTIONS ############
 
 
 @pytest.fixture(scope="session")
 def deposit(strategy, asset, user, amount):
-    def deposit(assets=amount, account=user):
-        asset.approve(strategy, assets, sender=account)
-        strategy.deposit(assets, account, sender=account)
+    def deposit(_strategy=strategy, _asset=asset, assets=amount, account=user):
+        _asset.approve(_strategy, assets, sender=account)
+        _strategy.deposit(assets, account, sender=account)
 
     yield deposit
 
