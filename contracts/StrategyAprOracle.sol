@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.18;
 
-import {AprOracleBase} from "@periphery/AprOracleBase.sol";
+import {AprOracleBase} from "@periphery/AprOracle/AprOracleBase.sol";
 
 contract StrategyAprOracle is AprOracleBase {
     constructor() AprOracleBase("Strategy Apr Oracle Example") {}
