@@ -82,7 +82,7 @@ def weth_amount(user, weth):
 def create_strategy(management, keeper, rewards):
     def create_strategy(asset, performanceFee=0):
         strategy = management.deploy(project.Strategy, asset, "yStrategy-Example")
-        strategy = project.ITokenizedStrategy.at(strategy.address)
+        strategy = project.IStrategyInterface.at(strategy.address)
 
         strategy.setKeeper(keeper, sender=management)
         strategy.setPerformanceFeeRecipient(rewards, sender=management)
