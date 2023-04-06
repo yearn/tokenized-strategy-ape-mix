@@ -17,7 +17,7 @@ dependencies:
     branch: test
     contracts_folder: src
     exclude:
-     - src/test/**/*
+     - test/**/*
   - name: periphery
     github: schlagonia/tokenized-strategy-periphery
     branch: master
