@@ -2,7 +2,7 @@ import ape
 from ape import Contract
 from utils.constants import MAX_BPS
 from utils.checks import check_strategy_totals
-from utils.utils import days_to_secs
+from utils.utils import days_to_secs, increase_time
 import pytest
 
 
@@ -93,10 +93,7 @@ def test_profitable_report(
     )
 
     # needed for profits to unlock
-    chain.pending_timestamp = (
-        chain.pending_timestamp + strategy.profitMaxUnlockTime() - 1
-    )
-    chain.mine(timestamp=chain.pending_timestamp)
+    increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
     check_strategy_totals(
         strategy,
@@ -176,10 +173,7 @@ def test__profitable_report__with_fee(
     )
 
     # needed for profits to unlock
-    chain.pending_timestamp = (
-        chain.pending_timestamp + strategy.profitMaxUnlockTime() + 100
-    )
-    chain.mine(timestamp=chain.pending_timestamp)
+    increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
     check_strategy_totals(
         strategy,
@@ -239,10 +233,7 @@ def test__tend_trigger(
     assert strategy.tendTrigger() == False
 
     # needed for profits to unlock
-    chain.pending_timestamp = (
-        chain.pending_timestamp + strategy.profitMaxUnlockTime() - 1
-    )
-    chain.mine(timestamp=chain.pending_timestamp)
+    increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
     # Check Trigger
     assert strategy.tendTrigger() == False

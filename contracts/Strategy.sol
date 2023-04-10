@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.18;
 
-import {BaseStrategy} from "@tokenized-strategy/BaseStrategy.sol";
+import {BaseTokenizedStrategy} from "@tokenized-strategy/BaseTokenizedStrategy.sol";
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
@@ -10,22 +10,25 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 //import "../interfaces/<protocol>/<Interface>.sol";
 
 /**
- * The `BaseLibrary` variable can be used to retrieve any storage data
- * within the implementation contract as if it were a linked library.
+ * The `TokenizedStrategy` variable can be used to retrieve the strategies
+ * specifc storage data your contract.
  *
- *       i.e. uint256 totalAssets = BaseLibrary.totalAssets()
+ *       i.e. uint256 totalAssets = TokenizedStrategy.totalAssets()
  *
- * We use this so that there does not have to be a library actually linked
- * to the strategy when deployed that would rarely be used and only for
- * reading storage. It also standardizies all Base Library interaction.
+ * This can not be used for write functions. Any TokenizedStrategy
+ * variables that need to be udpated post deployement will need to
+ * come from an external call from the strategies specific `management`.
  */
 
 // NOTE: To implement permissioned functions you can use the onlyManagement and onlyKeepers modifiers
 
-contract Strategy is BaseStrategy {
+contract Strategy is BaseTokenizedStrategy {
     using SafeERC20 for ERC20;
 
-    constructor(address _asset) BaseStrategy(_asset, "yStrategy Example") {}
+    constructor(
+        address _asset,
+        string memory _name
+    ) BaseTokenizedStrategy(_asset, _name) {}
 
     /*//////////////////////////////////////////////////////////////
                 NEEDED TO BE OVERRIDEN BY STRATEGIST
@@ -90,7 +93,7 @@ contract Strategy is BaseStrategy {
      * be done based on this returned value.
      *
      * This can still be called post a shutdown, a strategist can check
-     * `BaseLibrary.isShutdown()` to decide if funds should be reinvested
+     * `TokenizedStrategy.isShutdown()` to decide if funds should be reinvested
      * or simply realize any profits/losses.
      *
      * @return _invested A trusted and accurate account for the total
@@ -125,9 +128,9 @@ contract Strategy is BaseStrategy {
      *       sandwhiched can use the tend when a certain threshold
      *       of idle to totalAssets has been reached.
      *
-     * The library will do all needed debt and idle updates after this
-     * has finished and will have no effect on PPS of the strategy till
-     * report() is called.
+     * The TokenizedStrategy contract will do all needed debt and idle updates
+     * after this has finished and will have no effect on PPS of the strategy 
+     * till report() is called.
      *
      * @param _totalIdle The current amount of idle funds that are available to invest.
      *
@@ -167,7 +170,7 @@ contract Strategy is BaseStrategy {
     ) public view virtual returns (uint256) {
         TODO: If desired Implement deposit limit logic and any needed state variables EX:
             
-            uint256 totalAssets = BaseLibrary.totalAssets();
+            uint256 totalAssets = TokenizedStrategy.totalAssets();
             return totalAssets >= depositLimit ? 0 : depositLimit - totalAssets;
     }
     */
@@ -182,7 +185,7 @@ contract Strategy is BaseStrategy {
      * or sandwhichable strategies. It should never be lower than `totalIdle`.
      *
      *   EX:
-     *       return BaseLibray.totalIdle();
+     *       return TokenIzedStrategy.totalIdle();
      *
      * This does not need to take into account the `_owner`'s share balance
      * or conversion rates from shares to assets.
@@ -195,7 +198,7 @@ contract Strategy is BaseStrategy {
     ) public view virtual returns (uint256) {
         TODO: If desired Implement withdraw limit logic and any needed state variables EX:
             
-            return BaseLibrary.totalIdle();
+            return TokenizedStrategy.totalIdle();
     }
     */
 }
