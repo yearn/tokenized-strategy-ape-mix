@@ -94,13 +94,6 @@ def create_strategy(management, keeper, rewards):
 
 
 @pytest.fixture(scope="session")
-def strategy(asset, create_strategy):
-    strategy = create_strategy(asset)
-
-    yield strategy
-
-
-@pytest.fixture(scope="session")
 def create_oracle(management):
     def create_oracle(_management=management):
         oracle = _management.deploy(project.StrategyAprOracle)
@@ -108,6 +101,20 @@ def create_oracle(management):
         return oracle
 
     yield create_oracle
+
+
+@pytest.fixture(scope="session")
+def strategy(asset, create_strategy):
+    strategy = create_strategy(asset)
+
+    yield strategy
+
+
+@pytest.fixture(scope="session")
+def oracle(create_oracle):
+    oracle = create_oracle()
+
+    yield oracle
 
 
 ############ HELPER FUNCTIONS ############
