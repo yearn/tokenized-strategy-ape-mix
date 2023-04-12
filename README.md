@@ -24,7 +24,7 @@ You will only need to override the three functions in Strategy.sol of `_invest`,
 
     source venv/bin/activate
 
-You can make them persistent by adding the variables in ~/.env (ENVVAR=... format), then adding the following in .bashrc: `set -a; source "$HOME/.env"; set +a`
+Tip: You can make them persistent by adding the variables in ~/.env (ENVVAR=... format), then adding the following in .bashrc: `set -a; source "$HOME/.env"; set +a`
 
 ### Install Ape and all dependencies
 
