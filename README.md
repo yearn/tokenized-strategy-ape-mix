@@ -111,7 +111,7 @@ Once the Strategy is fully deployed and verified, you will need to verify the To
 
 1. Click on the `More Options` drop-down menu. 
 2. Click "is this a proxy?".
-3. Click the "Verify" button .
+3. Click the "Verify" button.
 4. Click "Save". 
 
 This should add all of the external `TokenizedStrategy` functions to the contract interface on Etherscan.
