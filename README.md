@@ -56,7 +56,7 @@ It is recommended to build strategies on the assumption that reports will happen
 
 The only global variable from the BaseTokenizedStrategy that can be accessed from storage is `asset`. If other global variables are needed for your specific implementation, you can use the default `TokenizedStrategy` variable to quickly retrieve any other needed variables withen the implementation, such as totalAssets, totalDebt, isShutdown etc.
 
-EX:
+Example:
 
     require(!TokenizedStrategy.isShutdown(), "strategy is shutdown");
 
@@ -91,7 +91,7 @@ In order for easy integration with Vaults, frontends, debt allocaters etc. There
 
 Due to the nature of the BaseTokenizedStrategy utilizing an external contract for the majority of its logic, the default interface for any tokenized strategy will not allow proper testing of all functions. Testing of your Strategy should utilize the pre-built `IStrategyInterface` interface to cast any deployed strategy through for testing, as seen in the confest example. You can add any external functions that you add for your specific implementation to this interface to be able to test all functions with one variable. 
 
-E.G.
+Example:
 
     strategy = management.deploy(project.Strategy, asset, name)
     strategy =  project.IStrategyInterface.at(strategy.address)
