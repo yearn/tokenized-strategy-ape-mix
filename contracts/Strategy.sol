@@ -144,7 +144,7 @@ contract Strategy is BaseTokenizedStrategy {
      *
      * @return . Should return true if tend() should be called by keeper or false if not.
      *
-    function tendTrigger() public view virtual returns (bool) {}
+    function tendTrigger() public view override returns (bool) {}
     */
 
     /**
@@ -167,7 +167,7 @@ contract Strategy is BaseTokenizedStrategy {
      *
     function availableDepositLimit(
         address _owner
-    ) public view virtual returns (uint256) {
+    ) public view override returns (uint256) {
         TODO: If desired Implement deposit limit logic and any needed state variables EX:
             
             uint256 totalAssets = TokenizedStrategy.totalAssets();
@@ -195,7 +195,7 @@ contract Strategy is BaseTokenizedStrategy {
      *
     function availableWithdrawLimit(
         address _owner
-    ) public view virtual returns (uint256) {
+    ) public view override returns (uint256) {
         TODO: If desired Implement withdraw limit logic and any needed state variables EX:
             
             return TokenizedStrategy.totalIdle();
