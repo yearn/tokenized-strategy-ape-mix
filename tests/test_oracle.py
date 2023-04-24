@@ -1,7 +1,7 @@
 import ape
 from ape import Contract, reverts, project
 from utils.checks import check_strategy_totals
-from utils.utils import days_to_secs
+from utils.helpers import days_to_secs
 import pytest
 
 

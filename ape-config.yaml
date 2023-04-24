@@ -14,13 +14,13 @@ dependencies:
     version: 4.8.2
   - name: tokenized-strategy
     github: yearn/tokenized-strategy
-    branch: test
+    ref: test
     contracts_folder: src
     exclude:
      - src/test/**/*
   - name: periphery
     github: schlagonia/tokenized-strategy-periphery
-    branch: master
+    ref: master
 
 solidity:
   import_remapping:
