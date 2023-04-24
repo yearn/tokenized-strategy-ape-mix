@@ -26,6 +26,8 @@ For a more complete overview of how the Tokenized Strategies please visit the [T
 
     source venv/bin/activate
 
+Tip: You can make them persistent by adding the variables in ~/.env (ENVVAR=... format), then adding the following in .bashrc: `set -a; source "$HOME/.env"; set +a`
+
 ### Install Ape and all dependencies
 
     pip install -r requirements.txt
@@ -54,13 +56,16 @@ To create your tokenized Strategy, you must override at least 3 functions outlin
 
 It is important to remember the default behavior for any tokenized strategy is to be a permissionless vault, so functions such as _invest and _freeFunds can be called by anyone, and care should be taken when implementing manipulatable logic such as swaps/lp movements. Strategists can choose to limit deposit/withdraw by overriding the `availableWithdrawLimit` and `availableDepositLimit` function if it is needed for safety.
 
+
 It is recommended to build strategies on the assumption that reports will happen based on the strategies specific `profitMaxUnlockTime`. Since this is the only time _totalInvested will be called any strategies that need more frequent checks or updates should override the _tend and tendTrigger functions for any needed mid-report maintenance.
 
 The only global variables from the BaseTokenizedStrategy that can be accessed from storage is `asset` and `TokenizedStrategy`. If other global variables are needed for your specific strategy, you can use the `TokenizedStrategy` variable to quickly retrieve any other needed variables withen the strategy, such as totalAssets, totalDebt, isShutdown etc.
 
+
 Example:
 
     require(!TokenizedStrategy.isShutdown(), "strategy is shutdown");
+
 
 NOTE: It is impossible to write to a strategy's default global storage state internally post-deployment. You must make external calls from the `management` address to configure any of the desired variables.
 
@@ -70,6 +75,7 @@ Cloning is available natively through the BaseTokenizedStrategy and can be easil
 
 NOTE: When cloning while using Periphery Helpers, you should reset all variables from the helper contract that will be used. The periphery contracts leave all global variables as non-constants so they can be overridden by the strategys. This means when cloning, they will all default back to 0, address(0), etc.
 
+
 The symbol used for each tokenized Strategy is set automatically with a standardized approach based on the `asset`'s symbol. Strategists should use the `name` parameter in the constructor for a unique and descriptive name that encapsulates their specific Strategy. Standard naming conventions will include the asset name, the protocol used to generate yield, and the method rewards are sold if applicable. I.e., "Weth-AaveV3Lender-UniV3Swapper".
 
 All other functionality, such as reward selling, emergency functions, upgradability, etc., is up to the strategist to determine what best fits their vision. Due to the ability of strategies to stand alone from a Vault, it is expected and encouraged for strategists to experiment with more complex, risky, or previously unfeasible Strategies.
@@ -77,6 +83,7 @@ All other functionality, such as reward selling, emergency functions, upgradabil
 ## Periphery
 
 To make Strategy writing as simple as possible, a suite of optional 'Periphery Helper' contracts can be inherited by your Strategy to provide standardized and tested functionality for things like swaps. A complete list of the periphery contracts can be viewed here https://github.com/Schlagonia/tokenized-strategy-periphery.
+
 
 All periphery contracts are optional, and strategists are free to choose if they wish to use them.
 
@@ -87,6 +94,7 @@ In order to make reward swapping as easy and standardized as possible there are 
 ### APR Oracles
 
 In order for easy integration with Vaults, frontends, debt allocaters etc. There is the option to create an apr oracle contract for your specific strategy that should return the expected apr of the Strategy based on some given debtChange. 
+
 
 ### HealthCheck
 
@@ -109,7 +117,9 @@ Example:
 
 Due to the permissionless nature of the tokenized Strategies, all tests are written without integration with any meta vault funding it. While those tests can be added, all V3 vaults utilize the ERC-4626 standard for deposit/withdraw and accounting, so they can be plugged in easily to any number of different vaults with the same `asset.`
 
+
 When testing on chains other than mainnet you will need to download the chain specific ape plugin. i.e. "pip install ape-polygon"
+
 
 #### Errors:
 
