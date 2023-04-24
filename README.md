@@ -1,10 +1,10 @@
 # Tokenized Strategy Mix for Yearn V3 strategies
 
-This repo will allow you to write, test and deploy V3 "Tokenized Strategies".
+This repo will allow you to write, test and deploy V3 "Tokenized Strategies" using [Ape Worx](https://www.apeworx.io/).
 
-You will only need to override the three functions in Strategy.sol of `_invest`, `freeFunds` and `_totalInvested`. With the option to also override `_tend`, `tendTrigger`, `availableDepositLimit` and `availableWithdrawLimit` if desired.
+You will only need to override the three functions in Strategy.sol of `_invest`, `_freeFunds` and `_totalInvested`. With the option to also override `_tend`, `tendTrigger`, `availableDepositLimit` and `availableWithdrawLimit` if desired.
 
-For a more complete overview of how the Tokenized Strategies please visit the [TokenizedStrategy Repo](https://github.com/yearn/tokenized-strategy).
+For a more complete overview of how the Tokenized Strategies work please visit the [TokenizedStrategy Repo](https://github.com/yearn/tokenized-strategy).
 
 ## How to start
 
@@ -59,7 +59,7 @@ It is important to remember the default behavior for any tokenized strategy is t
 
 It is recommended to build strategies on the assumption that reports will happen based on the strategies specific `profitMaxUnlockTime`. Since this is the only time _totalInvested will be called any strategies that need more frequent checks or updates should override the _tend and tendTrigger functions for any needed mid-report maintenance.
 
-The only global variables from the BaseTokenizedStrategy that can be accessed from storage is `asset` and `TokenizedStrategy`. If other global variables are needed for your specific strategy, you can use the `TokenizedStrategy` variable to quickly retrieve any other needed variables withen the strategy, such as totalAssets, totalDebt, isShutdown etc.
+The only default global variables from the BaseTokenizedStrategy that can be accessed from storage is `asset` and `TokenizedStrategy`. If other global variables are needed for your specific strategy, you can use the `TokenizedStrategy` variable to quickly retrieve any other needed variables withen the strategy, such as totalAssets, totalDebt, isShutdown etc.
 
 
 Example:
