@@ -1,7 +1,7 @@
 import ape
 from ape import Contract, reverts
 from utils.checks import check_strategy_totals, check_strategy_mins
-from utils.utils import days_to_secs
+from utils.helpers import days_to_secs
 import pytest
 
 
@@ -22,11 +22,7 @@ def test__shutdown__can_withdraw(
     deposit()
 
     check_strategy_totals(
-        strategy,
-        total_assets=amount,
-        total_debt=0,
-        total_idle=amount,
-        total_supply=amount,
+        strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
 
     chain.mine(14)
@@ -35,19 +31,13 @@ def test__shutdown__can_withdraw(
     strategy.shutdownStrategy(sender=management)
 
     check_strategy_mins(
-        strategy,
-        min_total_assets=amount,
-        min_total_debt=0,
-        min_total_idle=amount,
-        min_total_supply=amount,
+        strategy, min_total_assets=amount, min_total_debt=0, min_total_idle=amount
     )
 
     # withdrawal
     strategy.redeem(amount, user, user, sender=user)
 
-    check_strategy_totals(
-        strategy, total_assets=0, total_debt=0, total_idle=0, total_supply=0
-    )
+    check_strategy_totals(strategy, total_assets=0, total_debt=0, total_idle=0)
 
     assert (
         pytest.approx(asset.balanceOf(user), rel=RELATIVE_APPROX) == user_balance_before

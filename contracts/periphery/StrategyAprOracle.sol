@@ -21,12 +21,12 @@ contract StrategyAprOracle is AprOracleBase {
      * This will potentially be called during non-view functions so gas
      * effeciency should be taken into account.
      *
-     * @param _asset The token to get the apr for.
+     * @param _strategy The token to get the apr for.
      * @param _delta The difference in debt.
      * @return . The expected apr for the strategy repersented as 1e18.
      */
     function aprAfterDebtChange(
-        address _asset,
+        address _strategy,
         int256 _delta
     ) external view override returns (uint256) {
         // TODO: Implement any neccesary logic to return the most accurate
