@@ -8,19 +8,20 @@ plugins:
   - name: alchemy
 
 default_ecosystem: ethereum
+
 dependencies:
   - name: openzeppelin
     github: OpenZeppelin/openzeppelin-contracts
     version: 4.8.2
   - name: tokenized-strategy
     github: yearn/tokenized-strategy
-    ref: test
+    branch: test
     contracts_folder: src
     exclude:
-     - src/test/**/*
+      -  src/test/**/*
   - name: periphery
     github: schlagonia/tokenized-strategy-periphery
-    ref: master
+    branch: master
 
 solidity:
   import_remapping:
