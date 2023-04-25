@@ -83,8 +83,8 @@ def factory():
     yield Contract("0xa8f46C3f5A89fbC3c80B3EE333a1dAF8FA719061")
 
 
-@pytest.fixture(scope="seession")
-def set_protocol_fee(factory)
+@pytest.fixture(scope="session")
+def set_protocol_fee(factory):
     def set_protocol_fee(protocol_fee=0):
         owner = factory.owner()
 
