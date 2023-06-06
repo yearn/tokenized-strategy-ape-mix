@@ -80,31 +80,28 @@ def weth_amount(user, weth):
 
 @pytest.fixture(scope="session")
 def factory():
-    yield Contract("0xa8f46C3f5A89fbC3c80B3EE333a1dAF8FA719061")
+    yield Contract("0x85E2861b3b1a70c90D28DfEc30CE6E07550d83e9")
 
 
 @pytest.fixture(scope="session")
 def set_protocol_fee(factory):
     def set_protocol_fee(protocol_fee=0):
-        owner = factory.owner()
-
-        factory.setFee(protocol_fee, sender=owner)
+        owner = factory.governance()
+        factory.set_protocol_fee_recipient(owner)
+        factory.set_protocol_fee_bps(protocol_fee, sender=owner)
 
     yield set_protocol_fee
 
 
 @pytest.fixture(scope="session")
-def create_strategy(management, keeper, rewards, set_protocol_fee):
-    def create_strategy(asset, performanceFee=0):
+def create_strategy(management, keeper, rewards):
+    def create_strategy(asset, performanceFee=1_000):
         strategy = management.deploy(project.Strategy, asset, "yStrategy-Example")
         strategy = project.IStrategyInterface.at(strategy.address)
 
         strategy.setKeeper(keeper, sender=management)
         strategy.setPerformanceFeeRecipient(rewards, sender=management)
         strategy.setPerformanceFee(performanceFee, sender=management)
-
-        # Set protocol fees to 0 for easy calculations.
-        set_protocol_fee()
 
         return strategy
 
