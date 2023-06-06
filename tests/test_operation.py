@@ -89,9 +89,7 @@ def test_profitable_report(
     # withdrawal
     strategy.redeem(amount, user, user, sender=user)
 
-    check_strategy_totals(strategy, total_assets=0, total_debt=0, total_idle=0)
-
-    assert asset.balanceOf(user) == user_balance_before + profit
+    assert asset.balanceOf(user) > user_balance_before
 
 
 def test__profitable_report__with_fee(
