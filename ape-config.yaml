@@ -21,7 +21,7 @@ dependencies:
       -  src/test/**/*
   - name: periphery
     github: yearn/tokenized-strategy-periphery
-    branch: master
+    ref: master
     contracts_folder: src
 
 solidity:
