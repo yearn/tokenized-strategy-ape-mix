@@ -79,15 +79,15 @@ def weth_amount(user, weth):
 
 
 @pytest.fixture(scope="session")
-def factory():
-    yield Contract("0x85E2861b3b1a70c90D28DfEc30CE6E07550d83e9")
+def factory(strategy):
+    yield Contract(strategy.FACTORY())
 
 
 @pytest.fixture(scope="session")
 def set_protocol_fee(factory):
     def set_protocol_fee(protocol_fee=0):
         owner = factory.governance()
-        factory.set_protocol_fee_recipient(owner)
+        factory.set_protocol_fee_recipient(owner, sender=owner)
         factory.set_protocol_fee_bps(protocol_fee, sender=owner)
 
     yield set_protocol_fee
