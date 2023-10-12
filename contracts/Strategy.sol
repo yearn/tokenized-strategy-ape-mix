@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity 0.8.18;
 
-import {BaseTokenizedStrategy} from "@tokenized-strategy/BaseTokenizedStrategy.sol";
-
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {BaseStrategy, ERC20} from "@tokenized-strategy/BaseStrategy.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 // Import interfaces for many popular DeFi projects, or add your own!
@@ -11,27 +9,27 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 
 /**
  * The `TokenizedStrategy` variable can be used to retrieve the strategies
- * specifc storage data your contract.
+ * specific storage data your contract.
  *
  *       i.e. uint256 totalAssets = TokenizedStrategy.totalAssets()
  *
  * This can not be used for write functions. Any TokenizedStrategy
- * variables that need to be udpated post deployement will need to
+ * variables that need to be updated post deployment will need to
  * come from an external call from the strategies specific `management`.
  */
 
-// NOTE: To implement permissioned functions you can use the onlyManagement and onlyKeepers modifiers
+// NOTE: To implement permissioned functions you can use the onlyManagement, onlyEmergencyAuthorized and onlyKeepers modifiers
 
-contract Strategy is BaseTokenizedStrategy {
+contract Strategy is BaseStrategy {
     using SafeERC20 for ERC20;
 
     constructor(
         address _asset,
         string memory _name
-    ) BaseTokenizedStrategy(_asset, _name) {}
+    ) BaseStrategy(_asset, _name) {}
 
     /*//////////////////////////////////////////////////////////////
-                NEEDED TO BE OVERRIDEN BY STRATEGIST
+                NEEDED TO BE OVERRIDDEN BY STRATEGIST
     //////////////////////////////////////////////////////////////*/
 
     /**
@@ -46,9 +44,9 @@ contract Strategy is BaseTokenizedStrategy {
      * to deposit in the yield source.
      */
     function _deployFunds(uint256 _amount) internal override {
-        // TODO: implement deposit logice EX:
+        // TODO: implement deposit logic EX:
         //
-        //      lendingpool.deposit(asset, _amount ,0);
+        //      lendingPool.deposit(address(asset), _amount ,0);
     }
 
     /**
@@ -75,7 +73,7 @@ contract Strategy is BaseTokenizedStrategy {
     function _freeFunds(uint256 _amount) internal override {
         // TODO: implement withdraw logic EX:
         //
-        //      lendingPool.withdraw(asset, _amount);
+        //      lendingPool.withdraw(address(asset), _amount);
     }
 
     /**
@@ -107,9 +105,12 @@ contract Strategy is BaseTokenizedStrategy {
     {
         // TODO: Implement harvesting logic and accurate accounting EX:
         //
-        //      _claminAndSellRewards();
-        //      _totalAssets = aToken.balanceof(address(this)) + ERC20(asset).balanceOf(address(this));
-        _totalAssets = ERC20(asset).balanceOf(address(this));
+        //      if(!TokenizedStrategy.isShutdown()) {
+        //          _claimAndSellRewards();
+        //      }
+        //      _totalAssets = aToken.balanceOf(address(this)) + asset.balanceOf(address(this));
+        //
+        _totalAssets = asset.balanceOf(address(this));
     }
 
     /*//////////////////////////////////////////////////////////////
@@ -126,7 +127,7 @@ contract Strategy is BaseTokenizedStrategy {
      * through protected relays.
      *
      * This can be used to harvest and compound rewards, deposit idle funds,
-     * perform needed poisition maintenance or anything else that doesn't need
+     * perform needed position maintenance or anything else that doesn't need
      * a full report for.
      *
      *   EX: A strategy that can not deposit funds without getting
@@ -143,19 +144,18 @@ contract Strategy is BaseTokenizedStrategy {
     */
 
     /**
-     * @notice Returns weather or not tend() should be called by a keeper.
      * @dev Optional trigger to override if tend() will be used by the strategy.
      * This must be implemented if the strategy hopes to invoke _tend().
      *
      * @return . Should return true if tend() should be called by keeper or false if not.
      *
-    function tendTrigger() public view override returns (bool) {}
+    function _tendTrigger() public view override returns (bool) {}
     */
 
     /**
      * @notice Gets the max amount of `asset` that an address can deposit.
      * @dev Defaults to an unlimited amount for any address. But can
-     * be overriden by strategists.
+     * be overridden by strategists.
      *
      * This function will be called before any deposit or mints to enforce
      * any limits desired by the strategist. This can be used for either a
@@ -187,7 +187,7 @@ contract Strategy is BaseTokenizedStrategy {
     /**
      * @notice Gets the max amount of `asset` that can be withdrawn.
      * @dev Defaults to an unlimited amount for any address. But can
-     * be overriden by strategists.
+     * be overridden by strategists.
      *
      * This function will be called before any withdraw or redeem to enforce
      * any limits desired by the strategist. This can be used for illiquid
@@ -237,8 +237,8 @@ contract Strategy is BaseTokenizedStrategy {
         TODO: If desired implement simple logic to free deployed funds.
 
         EX:
-            _amount = min(_amount, atoken.balanceOf(address(this)));
-            lendingPool.withdraw(asset, _amount);
+            _amount = min(_amount, aToken.balanceOf(address(this)));
+            _freeFunds(_amount);
     }
 
     */
