@@ -174,31 +174,31 @@ def test__tend_trigger(
     user,
 ):
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
 
     # Deposit to the strategy
     deposit()
 
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
 
     chain.mine(days_to_secs(1))
 
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
 
     strategy.report(sender=keeper)
 
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
 
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
 
     strategy.redeem(amount, user, user, sender=user)
 
     # Check Trigger
-    assert strategy.tendTrigger() == False
+    assert strategy.tendTrigger()[0] == False
