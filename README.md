@@ -50,6 +50,6 @@ Tip: You can make them persistent by adding the variables in ~/.env (ENVVAR=... 
 
 ## Strategy Writing
 
-For a complete guide to creating a Tokenized Strategy please visit: https://docs.yearn.fi/developers/v3/strategy_development
+For a complete guide to creating a Tokenized Strategy please visit: https://docs.yearn.fi/developers/v3/strategy_writing_guide
 
 See the ApeWorx [documentation](https://docs.apeworx.io/ape/stable/) and [github](https://github.com/ApeWorX/ape) for more information.
