@@ -25,7 +25,6 @@ def check_oracle(oracle, strategy, user):
     oracle.setterFunction(setterVariable, sender=management)
     """
 
-
 def test__oracle(create_oracle, strategy, user):
 
     oracle = create_oracle()
