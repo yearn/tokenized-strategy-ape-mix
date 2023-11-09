@@ -17,7 +17,7 @@ def check_oracle(oracle, strategy, user):
 
     # TODO: Uncomment if there are setter functions to test.
     """
-    with reverts("Ownable: caller is not the owner"):
+    with reverts("!governance"):
         oracle.setterFunction(setterVariable, sender=user)
     
     management = strategy.management()
