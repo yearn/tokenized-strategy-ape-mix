@@ -30,4 +30,4 @@ def test__oracle(create_oracle, strategy, user):
 
     oracle = create_oracle()
 
-    check_oracle(oracle, strategy, strategy)
+    check_oracle(oracle, strategy, user)
