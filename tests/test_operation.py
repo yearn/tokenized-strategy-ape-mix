@@ -137,7 +137,9 @@ def test__profitable_report__with_fee(
 
     assert profit > 0
 
-    (protocol_fee, protocol_fee_recipient) = factory.protocol_fee_config()
+    (protocol_fee, protocol_fee_recipient) = factory.protocol_fee_config(
+        sender=strategy.address
+    )
 
     expected_performance_fee = (
         (profit * performance_fee // MAX_BPS) * (10_000 - protocol_fee) // MAX_BPS
