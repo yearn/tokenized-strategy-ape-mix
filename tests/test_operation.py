@@ -20,7 +20,7 @@ def test__operation(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -52,7 +52,7 @@ def test_profitable_report(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -73,7 +73,7 @@ def test_profitable_report(
 
     assert profit >= to_airdrop
 
-    # TODO: Implement logic so totalDebt == amount + profit
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -81,6 +81,7 @@ def test_profitable_report(
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -116,7 +117,7 @@ def test__profitable_report__with_fee(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -136,13 +137,15 @@ def test__profitable_report__with_fee(
 
     assert profit > 0
 
-    (protocol_fee, protocol_fee_recipient) = factory.protocol_fee_config()
+    (protocol_fee, protocol_fee_recipient) = factory.protocol_fee_config(
+        sender=strategy.address
+    )
 
     expected_performance_fee = (
         (profit * performance_fee // MAX_BPS) * (10_000 - protocol_fee) // MAX_BPS
     )
 
-    # TODO: Implement logic so totalDebt == amount + profit
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -150,6 +153,7 @@ def test__profitable_report__with_fee(
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
