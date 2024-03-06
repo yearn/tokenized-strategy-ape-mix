@@ -20,7 +20,7 @@ def test__operation(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -52,7 +52,7 @@ def test_profitable_report(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -73,7 +73,7 @@ def test_profitable_report(
 
     assert profit >= to_airdrop
 
-    # TODO: Implement logic so totalDebt == amount + profit
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -81,6 +81,7 @@ def test_profitable_report(
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -102,6 +103,7 @@ def test__profitable_report__with_fee(
     rewards,
     amount,
     whale,
+    factory,
     RELATIVE_APPROX,
     keeper,
 ):
@@ -115,7 +117,7 @@ def test__profitable_report__with_fee(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so totalDebt ends > 0
+    # TODO: Implement logic so total_debt ends > 0
     check_strategy_totals(
         strategy, total_assets=amount, total_debt=0, total_idle=amount
     )
@@ -135,9 +137,15 @@ def test__profitable_report__with_fee(
 
     assert profit > 0
 
-    expected_performance_fee = profit * performance_fee // MAX_BPS
+    (protocol_fee, protocol_fee_recipient) = factory.protocol_fee_config(
+        sender=strategy.address
+    )
 
-    # TODO: Implement logic so totalDebt == amount + profit
+    expected_performance_fee = (
+        (profit * performance_fee // MAX_BPS) * (10_000 - protocol_fee) // MAX_BPS
+    )
+
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -145,6 +153,7 @@ def test__profitable_report__with_fee(
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
+    # TODO: Implement logic so total_debt == amount + profit
     check_strategy_totals(
         strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
     )
@@ -158,8 +167,6 @@ def test__profitable_report__with_fee(
     rewards_balance_before = asset.balanceOf(rewards)
 
     strategy.redeem(expected_performance_fee, rewards, rewards, sender=rewards)
-
-    check_strategy_totals(strategy, total_assets=0, total_debt=0, total_idle=0)
 
     assert asset.balanceOf(rewards) >= rewards_balance_before + expected_performance_fee
 
