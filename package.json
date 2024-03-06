@@ -1,7 +1,7 @@
 {
   "name": "tokenized_strategy_ape_mix",
   "devDependencies": {
-    "@openzeppelin/contracts": "4.8.2",
+    "@openzeppelin/contracts": "4.9.5",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "hardhat": "^2.12.2",

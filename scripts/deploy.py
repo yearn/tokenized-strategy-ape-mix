@@ -1,7 +1,7 @@
 from ape import project, accounts, chain
 import click
 
-deployer = accounts.load("v3_deployer")
+deployer = accounts.load("")
 
 
 def deploy():

@@ -8,7 +8,9 @@ def test_function_collisions(strategy, asset, management, rewards, user, keeper)
     wad = int(1e18)
 
     with ape.reverts("initialized"):
-        strategy.init(asset, "name", management, rewards, keeper, sender=management)
+        strategy.initialize(
+            asset, "name", management, rewards, keeper, sender=management
+        )
 
     # Check view functions
     assert strategy.convertToAssets(wad) == wad
@@ -21,11 +23,8 @@ def test_function_collisions(strategy, asset, management, rewards, user, keeper)
     assert strategy.totalSupply() == 0
     assert strategy.unlockedShares() == 0
     assert strategy.asset() == asset
-    assert strategy.apiVersion() == "3.0.1"
-    assert strategy.totalIdle() == 0
-    assert strategy.totalDebt() == 0
+    assert strategy.apiVersion() == "3.0.2"
     assert strategy.MAX_FEE() == 5_000
-    assert strategy.MIN_FEE() == 500
     assert strategy.fullProfitUnlockDate() == 0
     assert strategy.profitUnlockingRate() == 0
     assert strategy.lastReport() > 0
@@ -51,8 +50,6 @@ def test_function_collisions(strategy, asset, management, rewards, user, keeper)
         strategy.setProfitMaxUnlockTime(1, sender=user)
 
     # Assure checks are being used
-    with ape.reverts("MIN FEE"):
-        strategy.setPerformanceFee(int(0), sender=management)
     with ape.reverts("Cannot be self"):
         strategy.setPerformanceFeeRecipient(strategy.address, sender=management)
     with ape.reverts("too long"):

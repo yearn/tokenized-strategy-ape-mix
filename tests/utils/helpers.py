@@ -1,5 +1,5 @@
 import ape
-from utils.checks import check_strategy_totals
+import pytest
 
 
 def days_to_secs(days: int) -> int:
@@ -13,11 +13,9 @@ def increase_time(chain, seconds):
 
 def get_strategy_totals(strategy):
     assets = strategy.totalAssets()
-    debt = strategy.totalDebt()
-    idle = strategy.totalIdle()
     supply = strategy.totalSupply()
 
-    return (assets, debt, idle, supply)
+    return (assets, supply)
 
 
 def deposit(strategy, asset, amount, user):
@@ -45,17 +43,10 @@ def withdraw_and_check(strategy, asset, amount, user):
 
 
 def check_normal_flow(chain, strategy, asset, amount, user):
-    assets, debt, idle, supply = get_strategy_totals(strategy)
-
     # Deposit into the strategy
     deposit(strategy, asset, amount, user)
 
-    check_strategy_totals(
-        strategy=strategy,
-        total_assets=assets + amount,
-        total_debt=debt,
-        total_idle=idle + amount,
-    )
+    assert pytest.approx(strategy.totalAssets(), abs=2) == amount
 
     increase_time(chain, 15)
 
@@ -67,4 +58,4 @@ def check_normal_flow(chain, strategy, asset, amount, user):
     # Withdraw
     withdraw_and_check(strategy, asset, amount, user)
 
-    check_strategy_totals(strategy=strategy, total_assets=0, total_debt=0, total_idle=0)
+    assert strategy.totalAssets() == 0

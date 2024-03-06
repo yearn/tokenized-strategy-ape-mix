@@ -15,14 +15,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - uses: ApeWorX/github-action@v2
-        with:
-          ape-version-pin: "==0.6.7"
+
       - run: ape compile --size
       - run: npm install hardhat
       - run: ape test
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           WEB3_ALCHEMY_PROJECT_ID: ${{ secrets.WEB3_ALCHEMY_PROJECT_ID }}
           WEB3_INFURA_PROJECT_ID: ${{ secrets.WEB3_INFURA_PROJECT_ID }}

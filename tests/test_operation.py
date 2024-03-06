@@ -1,7 +1,6 @@
 import ape
 from ape import Contract
 from utils.constants import MAX_BPS
-from utils.checks import check_strategy_totals
 from utils.helpers import days_to_secs, increase_time, withdraw_and_check
 import pytest
 
@@ -20,17 +19,14 @@ def test__operation(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so total_debt ends > 0
-    check_strategy_totals(
-        strategy, total_assets=amount, total_debt=0, total_idle=amount
-    )
+    assert strategy.totalAssets() == amount
 
     increase_time(chain, 10)
 
     # withdrawal
     withdraw_and_check(strategy, asset, amount, user)
 
-    check_strategy_totals(strategy, total_assets=0, total_debt=0, total_idle=0)
+    assert strategy.totalAssets() == 0
 
     assert asset.balanceOf(user) == user_balance_before
 
@@ -52,10 +48,7 @@ def test_profitable_report(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so total_debt ends > 0
-    check_strategy_totals(
-        strategy, total_assets=amount, total_debt=0, total_idle=amount
-    )
+    assert strategy.totalAssets() == amount
 
     # TODO: Add some code to simulate earning yield
     to_airdrop = amount // 100
@@ -73,18 +66,13 @@ def test_profitable_report(
 
     assert profit >= to_airdrop
 
-    # TODO: Implement logic so total_debt == amount + profit
-    check_strategy_totals(
-        strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
-    )
+    assert strategy.totalAssets() == amount + profit
 
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
-    # TODO: Implement logic so total_debt == amount + profit
-    check_strategy_totals(
-        strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
-    )
+    assert strategy.totalAssets() == amount + profit
+
     assert strategy.pricePerShare() > before_pps
 
     # withdrawal
@@ -117,10 +105,7 @@ def test__profitable_report__with_fee(
     # Deposit to the strategy
     deposit()
 
-    # TODO: Implement logic so total_debt ends > 0
-    check_strategy_totals(
-        strategy, total_assets=amount, total_debt=0, total_idle=amount
-    )
+    assert strategy.totalAssets() == amount
 
     # TODO: Add some code to simulate earning yield
     to_airdrop = amount // 100
@@ -145,18 +130,12 @@ def test__profitable_report__with_fee(
         (profit * performance_fee // MAX_BPS) * (10_000 - protocol_fee) // MAX_BPS
     )
 
-    # TODO: Implement logic so total_debt == amount + profit
-    check_strategy_totals(
-        strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
-    )
+    assert strategy.totalAssets() == amount + profit
 
     # needed for profits to unlock
     increase_time(chain, strategy.profitMaxUnlockTime() - 1)
 
-    # TODO: Implement logic so total_debt == amount + profit
-    check_strategy_totals(
-        strategy, total_assets=amount + profit, total_debt=0, total_idle=amount + profit
-    )
+    assert strategy.totalAssets() == amount + profit
 
     assert strategy.pricePerShare() > before_pps
 
