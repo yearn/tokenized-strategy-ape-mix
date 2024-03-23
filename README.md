@@ -11,7 +11,7 @@ For a more complete overview of how the Tokenized Strategies work please visit t
 ### Requirements
     Python >=3.8.0, <=3.10
     Yarn
-    Node.js >=14
+    Node.js >=14, <=20,
     Hardhat
 
 ### Fork this repository
